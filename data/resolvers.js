@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import friends, { Friends } from "./dbConnectors";
+import { Friends } from "./dbConnectors";
 
 // resolvers maps
 const resolvers = {
@@ -21,13 +21,21 @@ const resolvers = {
             newFriend.id = newFriend._id;
 
             return new Promise((resolve, object) => {
-                newFriend.save((err) => {
+                newFriend.save((err, res) => {
                     if (err) reject(err)
-                    else resolve(newFriend)
-                })
-            })
+                    else resolve(res)
+                });
+            });
+        },
+        updateFriend: (root, { input }) => {
+            return new Promise((resolve, object) => {
+                Friends.findOneAndUpdate({_id: input.id }, input, { new: true }, (err, friend) => {
+                    if (err) reject(err)
+                    else resolve(friend)
+                });
+            });
         }
     },    
 };
 
-export default resolvers;
+export { resolvers };

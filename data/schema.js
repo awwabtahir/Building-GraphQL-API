@@ -12,6 +12,13 @@ const typeDefs = `
         email: String
     }
 
+    type Alien {
+        id: ID
+        firstName: String
+        lastName: String
+        planet: String
+    }
+
     type Query {
         getFriend(id: ID): Friend
     }
@@ -27,9 +34,10 @@ const typeDefs = `
 
     type Mutation {
         createFriend(input: FriendInput): Friend
+        updateFriend(input: FriendInput): Friend
     }
 `;
 
-const schema = makeExecutableSchema({ typeDefs }, resolvers);
+const schema = makeExecutableSchema({ typeDefs , resolvers });
 
 export { schema };
